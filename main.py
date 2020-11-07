@@ -1,8 +1,9 @@
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
+from dotenv import load_dotenv
 
-from resources import *
+from finance_core.resources import *
 
 app = Flask(__name__)
 api = Api(app)
@@ -25,4 +26,5 @@ api.add_resource(LossHistoryList, API_PREFIX + 'loss_history/')
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    load_dotenv()
+    app.run(host='localhost', debug=True)
