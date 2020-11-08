@@ -26,7 +26,26 @@ class Deposits(BaseResource):
 
         return {'message': 'ok'}
 
+    def delete(self, deposit_id):
+        self.db.root['deposits'].delete_one({'_id':  ObjectId(deposit_id)})
+
+        return {'message': 'ok'}
+
 
 class DepositsList(BaseResource):
     def get(self):
         return {'deposits': self.db.cursor_to_list(self.db.root['deposits'].find())}
+
+    def post(self):
+        parser = reqparse.RequestParser()
+
+        parser.add_argument('balance', type=int, required=True, dest=False)
+        parser.add_argument('symbol', type=str, required=True, dest=False)
+        parser.add_argument('name', type=str, required=True, dest=False)
+        parser.add_argument('emoji', type=str, required=True, dest=False)
+
+        args = dict(parser.parse_args(strict=True))
+
+        self.db.root['deposits'].insert(args)
+
+        return {'message': 'ok'}
