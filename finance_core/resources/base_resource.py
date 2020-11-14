@@ -9,6 +9,10 @@ class BaseResource(Resource):
     def __init__(self):
         self.db = DataBase()
 
+        self.fields = {
+            ''
+        }
+
     def dispatch_request(self, *args, **kwargs):
 
         # check JWT token

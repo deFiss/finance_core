@@ -25,6 +25,9 @@ api.add_resource(IncomeHistoryList, API_PREFIX + 'income_history/')
 
 api.add_resource(LossHistoryList, API_PREFIX + 'loss_history/')
 
+api.add_resource(Templates, API_PREFIX + 'template/<string:template_id>/')
+api.add_resource(TemplatesList, API_PREFIX + 'template/')
+
 
 if __name__ == '__main__':
     load_dotenv()
