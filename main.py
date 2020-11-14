@@ -25,18 +25,14 @@ class Server:
         self.app = None
         self.api = None
 
-    def start(self):
+    def config_app(self):
         self.app = Flask(__name__)
         self.api = Api(self.app)
         CORS(self.app)
 
         self._add_resources()
 
-        self.app.run(
-            host=os.getenv('SERVER_HOST'),
-            port=int(os.getenv('SERVER_PORT')),
-            debug=True
-        )
+        return self.app
 
     def _add_resources(self):
 
@@ -52,4 +48,10 @@ class Server:
 if __name__ == '__main__':
     load_dotenv()
     server = Server()
-    server.start()
+    app = server.config_app()
+
+    app.run(
+        host=os.getenv('SERVER_HOST'),
+        port=int(os.getenv('SERVER_PORT')),
+        debug=True
+    )
