@@ -9,6 +9,7 @@ class Deposit(BaseResource):
             {'name': 'balance', 'type': int},
             {'name': 'name', 'type': str},
             {'name': 'emoji', 'type': str},
+            {'name': 'symbol', 'type': str},
 
         ]
 
