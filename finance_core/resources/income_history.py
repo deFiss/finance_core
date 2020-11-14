@@ -20,6 +20,11 @@ class IncomeHistory(BaseResource):
         parser = reqparse.RequestParser()
 
         for field in self.fields:
+
+            if field['name'] == 'comment':
+                parser.add_argument(**field, required=False, dest=False)
+                continue
+
             parser.add_argument(**field, required=True, dest=False)
 
         args = dict(parser.parse_args(strict=True))

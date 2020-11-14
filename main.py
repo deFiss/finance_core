@@ -38,6 +38,8 @@ class Server:
             debug=True
         )
 
+        return app
+
     def _add_resources(self):
 
         for resource in self.resources:
@@ -49,7 +51,13 @@ class Server:
             self.api.add_resource(resource, object_url_path, model_url_path)
 
 
-if __name__ == '__main__':
+def start_app():
     load_dotenv()
     server = Server()
-    server.start()
+    app = server.start()
+
+    return app
+
+
+if __name__ == '__main__':
+    start_app()
