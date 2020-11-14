@@ -1,24 +1,21 @@
-from .deposits import Deposits, DepositsList
-from .types_of_income import TypesOfIncome, TypesOfIncomeList
-from .types_of_losses import TypesOfLosses, TypesOfLossesList
-from .income_history import IncomeHistoryList
-from .loss_history import LossHistoryList
-from .templates import Templates, TemplatesList
+from .deposit import Deposit
+
+from .template import Template
+
+from .type_of_loss import TypeOfLoss
+from .type_of_income import TypeOfIncome
+
+from .income_history import IncomeHistory
+from .loss_history import LossHistory
 
 __all__ = [
-    'Deposits',
-    'DepositsList',
+    'Deposit',
+    'Template',
 
-    'TypesOfIncome',
-    'TypesOfIncomeList',
+    'TypeOfIncome',
+    'TypeOfLoss',
 
-    'TypesOfLosses',
-    'TypesOfLossesList',
+    'IncomeHistory',
+    'LossHistory',
 
-    'IncomeHistoryList',
-
-    'LossHistoryList',
-
-    'Templates',
-    'TemplatesList',
 ]

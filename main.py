@@ -6,29 +6,50 @@ import os
 
 from finance_core.resources import *
 
-app = Flask(__name__)
-api = Api(app)
-CORS(app)
 
-API_PREFIX = '/api/v1/'
+class Server:
+    def __init__(self):
+        self.resources = [
+            Deposit,
+            Template,
 
-api.add_resource(Deposits, API_PREFIX + 'deposits/<string:deposit_id>/')
-api.add_resource(DepositsList, API_PREFIX + 'deposits/')
+            TypeOfIncome,
+            TypeOfLoss,
 
-api.add_resource(TypesOfIncome, API_PREFIX + 'type_of_income/<string:type_of_income_id>/')
-api.add_resource(TypesOfIncomeList, API_PREFIX + 'type_of_income/')
+            IncomeHistory,
+            LossHistory
+        ]
 
-api.add_resource(TypesOfLosses, API_PREFIX + 'type_of_loss/<string:types_of_losses_id>/')
-api.add_resource(TypesOfLossesList, API_PREFIX + 'type_of_loss/')
+        self.api_prefix = '/api/v1/'
 
-api.add_resource(IncomeHistoryList, API_PREFIX + 'income_history/')
+        self.app = None
+        self.api = None
 
-api.add_resource(LossHistoryList, API_PREFIX + 'loss_history/')
+    def start(self):
+        self.app = Flask(__name__)
+        self.api = Api(self.app)
+        CORS(self.app)
 
-api.add_resource(Templates, API_PREFIX + 'template/<string:template_id>/')
-api.add_resource(TemplatesList, API_PREFIX + 'template/')
+        self._add_resources()
+
+        self.app.run(
+            host=os.getenv('SERVER_HOST'),
+            port=int(os.getenv('SERVER_PORT')),
+            debug=True
+        )
+
+    def _add_resources(self):
+
+        for resource in self.resources:
+            resource_name = str(resource())
+
+            model_url_path = f'{self.api_prefix}{resource_name}/'
+            object_url_path = model_url_path + '<string:object_id>/'
+
+            self.api.add_resource(resource, object_url_path, model_url_path)
 
 
 if __name__ == '__main__':
     load_dotenv()
-    app.run(host=os.getenv('SERVER_HOST'), port=int(os.getenv('SERVER_PORT')), debug=True)
+    server = Server()
+    server.start()
