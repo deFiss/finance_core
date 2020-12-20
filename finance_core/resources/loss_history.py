@@ -16,6 +16,24 @@ class LossHistory(BaseResource):
 
         super().__init__(fields, db_collection_name)
 
+    def get(self, object_id=None):
+        if not object_id:
+
+            data = self.db.cursor_to_list(self.collection.find())
+            for d in data:
+                d['time'] = self._convert_time(d['time'])
+
+            return {'data': data}
+
+        result = self.collection.find_one({'_id': ObjectId(object_id)})
+
+        if not result:
+            abort(404)
+
+        data = self.db.cursor_to_list([result])[0]
+        data['time'] = self._convert_time(data['time'])
+        return {'data': data}
+
     def post(self):
         parser = reqparse.RequestParser()
 

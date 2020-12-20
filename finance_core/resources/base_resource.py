@@ -69,5 +69,9 @@ class BaseResource(Resource):
 
         return super().dispatch_request(*args, **kwargs)
 
+    @staticmethod
+    def _convert_time(time):
+        return time.strftime('%Y-%m-%dT%H:%M:%SZ')
+
     def __repr__(self):
         return self.db_collection_name
